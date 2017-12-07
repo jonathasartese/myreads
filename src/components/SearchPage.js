@@ -72,6 +72,7 @@ class SearchPage extends Component {
                 </div>
                 <div className="book-title">{books.title}</div>
                 <div className="book-authors">{books.authors}</div>
+                {console.log(books.shelf)}
               </div>
 
             </li>
