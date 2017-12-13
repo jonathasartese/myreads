@@ -9,8 +9,11 @@ import { Route } from 'react-router-dom'
 class BooksApp extends Component {
 
   state = {
-    books: []
+    books: [],
+    query: '',
+    search: []
   }
+
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
@@ -18,9 +21,23 @@ class BooksApp extends Component {
     })
   }
 
+  updateQuery = (query) => {
+    this.setState({ query: query.trim() })
+    BooksAPI.search(query).then((search) => {
+      this.setState({ search  })
+    })
+  }
+/*
+  ChangeShelf(contact) {
+    ContactsAPI.create(contact).then(contact => {
+      this.setState(state => ({
+        contacts: state.contacts.concat([ contact ])
+      }))
+    })
+  }
+*/
   render() {
-    const { books } = this.state;
-
+    const { books, query, search } = this.state;
 
     return (
       <div className="app">
@@ -31,7 +48,10 @@ class BooksApp extends Component {
       )}/>
       <Route path='/search' render={() => (
           <SearchPage
-          books={books}/>
+          books={search}
+          updateQuery= {this.updateQuery}
+          query={this.state.query}
+          />
       )}/>
       </div>
     )

@@ -3,9 +3,7 @@ import './../css/App.css'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import If from './../If'
-
-
-
+import BookInfo from './BookInfo'
 
 class ListBooks extends Component {
 
@@ -13,8 +11,7 @@ class ListBooks extends Component {
     books: PropTypes.array.isRequired
   }
 
-
-  render() {
+  render(){
     const { books } = this.props
     const rows = [
       { shelf: 'currentlyReading', books },
@@ -32,43 +29,29 @@ class ListBooks extends Component {
       <div className="list-books-content">
         <div>
           <div className="bookshelf">
-            <h2 className="bookshelf-title"></h2>
+            <h2 className="bookshelf-title">
             {rows.map((rows) => (
-              <div>
+              <div key={rows.shelf} >
                     <p>{rows.shelf}</p>
 
                   {books.map((books) => (
-                    <If test ={books.shelf == rows.shelf}>
+                  <div>
+                    <If test ={books.shelf === rows.shelf}>
 
-                      <div className="bookshelf-books">
-                        <ol className="books-grid">
-                          <li key = {books.id}>
-                            <div className="book">
-                              <div className="book-top">
-                                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:'url(' + books.imageLinks.thumbnail + ')'}}></div>
-                                  <div className="book-shelf-changer">
-                                  <select>
-                                    <option value="none" disabled>Move to...</option>
-                                    <option value="currentlyReading">Currently Reading</option>
-                                    <option value="wantToRead">Want to Read</option>
-                                    <option value="read">Read</option>
-                                    <option value="none">None</option>
-                                  </select>
-                                  </div>
-                              </div>
-                              <div className="book-title">{books.title}</div>
-                              <div className="book-authors">{books.authors}</div>
-                            </div>
-
-                          </li>
-
-                      </ol>
-                    </div>
-                  </If>
+                        <div className="bookshelf-books">
+                          <ol className="books-grid">
+                            <li key = {books.id}>
+                              <BookInfo books={books}/>
+                            </li>
+                        </ol>
+                      </div>
+                    </If>
+                  </div>
                   ))}
               </div>
 
             ))}
+            </h2>
           </div>
         </div>
       </div>
