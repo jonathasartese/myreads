@@ -5,30 +5,25 @@ import PropTypes from 'prop-types'
 class Selectshelf extends Component {
 
   static propTypes = {
-    shelf: PropTypes.string.isRequired
+    books: PropTypes.array.isRequired,
+    ChangeShelf: PropTypes.func.isRequired
   }
 
-  //componentDidMount(){}
-  constructor(props) {
-    super(props);
-    this.state = {value: props.shelf};
-
-    this.handleChange = this.handleChange.bind(this);
+  state = {
+    value: this.props.books.shelf
   }
 
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-    alert('Your favorite flavor is: ' + this.state.value);
-    event.preventDefault();
+  handleChange = (event) => {
+      this.setState({value: event.target.value});
+      this.props.ChangeShelf(this.props.books,event.target.value )
+      
   }
-
   render(){
-      const {shelf} = this.props
+      const { books} = this.props
       return(
         <form >
           <div className="book-shelf-changer">
-            <select value={this.state.value} onChange={this.handleChange}>
+            <select value={this.state.value} onChange={this.handleChange} >
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>

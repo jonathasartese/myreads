@@ -23,27 +23,25 @@ class BooksApp extends Component {
 
   updateQuery = (query) => {
     this.setState({ query: query.trim() })
-    BooksAPI.search(query).then((search) => {
-      this.setState({ search  })
-    })
+    if(query){
+      BooksAPI.search(query).then((search) => {
+        this.setState({ search })
+      })
+    }
   }
-/*
-  ChangeShelf(contact) {
-    ContactsAPI.create(contact).then(contact => {
-      this.setState(state => ({
-        contacts: state.contacts.concat([ contact ])
-      }))
-    })
-  }
-*/
-  render() {
-    const { books, query, search } = this.state;
 
+  ChangeShelf(bookid, targetshelf) {
+      BooksAPI.update(bookid, targetshelf)
+  }
+
+  render() {
+    const { books, search } = this.state;
     return (
       <div className="app">
       <Route exact path='/' render={() => (
           <ListBooks
           books={books}
+          ChangeShelf= {this.ChangeShelf}
           />
       )}/>
       <Route path='/search' render={() => (
@@ -51,6 +49,7 @@ class BooksApp extends Component {
           books={search}
           updateQuery= {this.updateQuery}
           query={this.state.query}
+          ChangeShelf= {this.ChangeShelf}
           />
       )}/>
       </div>
