@@ -19,7 +19,6 @@ class Selectshelf extends Component {
       
   }
   render(){
-      const { books} = this.props
       return(
         <form >
           <div className="book-shelf-changer">

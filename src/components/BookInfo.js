@@ -5,7 +5,7 @@ import Selectshelf from './Selectshelf'
 
 class BookInfo extends Component {
   static propTypes = {
-    books: PropTypes.object.isRequired,
+    books: PropTypes.array.isRequired,
     ChangeShelf: PropTypes.func.isRequired
   }
 
@@ -17,6 +17,7 @@ class BookInfo extends Component {
           <div className="book-cover" style={{ width: 128, height: 193,
             backgroundImage:'url(' + books.imageLinks.thumbnail + ')'}}>
           </div>
+          {console.log(books)}
           <Selectshelf
           books = {books}
           ChangeShelf= {ChangeShelf}

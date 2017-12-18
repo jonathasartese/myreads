@@ -7,13 +7,16 @@ import { Route } from 'react-router-dom'
 
 
 class BooksApp extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    books: [],
-    query: '',
-    search: []
+    this.state = {
+      books: [],
+      query: '',
+      search: []
+    }
+    this.ChangeShelf = this.ChangeShelf.bind(this);
   }
-
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
@@ -30,8 +33,13 @@ class BooksApp extends Component {
     }
   }
 
-  ChangeShelf(bookid, targetshelf) {
-      BooksAPI.update(bookid, targetshelf)
+  ChangeShelf = (book, targetshelf) => {
+      BooksAPI.update(book, targetshelf).then((book)=>{
+        book.shelf = targetshelf;
+        this.setState(state => ({
+          books: state.books.filter(b => b.id !== book.id).concat([book])
+      })
+    )})
   }
 
   render() {
