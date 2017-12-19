@@ -10,7 +10,12 @@ class Selectshelf extends Component {
   }
 
   state = {
-    value: this.props.books.shelf
+    value: 'none'
+  }
+
+  componentWillMount() {
+    if(this.props.books.shelf)
+      this.setState({ value: this.props.books.shelf });
   }
 
   handleChange = (event) => {
